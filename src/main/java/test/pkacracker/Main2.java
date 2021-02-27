@@ -111,10 +111,16 @@ public class Main2 {
         fileOutputStream.write(output);
         fileOutputStream.close();
     }
+    /*
+    Метод для запаковки в zlib архив
+    */
     public static byte[] pack(byte[] bytes) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        // представляем длину исходного массива в виде 4 байтов
         byte[] length = ByteBuffer.allocate(4).putInt(bytes.length).array();
+        // записываем длину в начало байтового потока
         out.write(length);
+        // запаковываем байты в zlib и записываем в поток после длины
         DeflaterOutputStream dout = new DeflaterOutputStream(out);
         dout.write(bytes);
         dout.close();
